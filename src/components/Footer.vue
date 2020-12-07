@@ -1,13 +1,12 @@
 <template>
-
+  <v-footer app color="primary" absolute :footer="footer">
+    <v-spacer/>
+    <div>&copy; {{ new Date().getFullYear() + '' + footer }}</div>
+  </v-footer>
 </template>
 
 <script>
 export default {
-  name: 'header'
+  props: ['footer']
 }
 </script>
-
-<style scoped>
-
-</style>

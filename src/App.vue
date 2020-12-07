@@ -1,25 +1,13 @@
 <template>
   <v-app>
-<!--    <div id="app">-->
-<!--      title modify-->
-<!--      <div id="nav">-->
-<!--        <router-link to="/">home</router-link> |-->
-<!--        <router-link to="/about">about</router-link> |-->
-<!--        <router-link to="/test">test</router-link>-->
-<!--      </div>-->
-<!--      <router-view/>-->
-<!--    </div>-->
     <v-app-bar
       app
       color="primary"
       dart
       >
-      <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>page title</v-toolbar-title>
+      <v-app-bar-nav-icon @click="drawer=!drawer"/>
+      <site-title :title="title"></site-title>
       <v-spacer/>
-      <v-btn icon to="/about">
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer">
       test
@@ -34,23 +22,29 @@
         </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
+      <site-menu></site-menu>
     </v-navigation-drawer>
     <v-content>
       <router-view/>
     </v-content>
-    <v-footer app color="primary" absolute>
-      <v-spacer/>
-      <div>&copy; {{ new Date().getFullYear() }}</div>
-    </v-footer>
+    <site-footer :footer="footer"></site-footer>
   </v-app>
 </template>
 
 <script>
+import SiteTitle from '@/components/Title'
+import SiteFooter from '@/components/Footer'
+import SiteMenu from '@/components/Menu'
+
 export default {
+  components: { SiteTitle, SiteFooter, SiteMenu },
   name: 'App',
   data () {
     return {
-      drawer: false
+      drawer: false,
+      items: [],
+      title: 'my Title',
+      footer: 'my footer'
     }
   }
 }
