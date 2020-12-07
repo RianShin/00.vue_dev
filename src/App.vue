@@ -9,6 +9,8 @@
       <site-title :title="title"></site-title>
       <v-spacer/>
       <v-btn icon @click="save"><v-icon>mdi-check</v-icon></v-btn>
+      <v-btn icon @click="read"><v-icon>mdi-access-point</v-icon></v-btn>
+      <v-btn icon @click="readOnce"><v-icon>mdi-access-point-network</v-icon></v-btn>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer">
       test
@@ -49,6 +51,19 @@ export default {
         title: 'title',
         text: 'text'
       })
+    },
+    read () {
+      console.log('load0000000')
+      this.$firebase.database().ref().child('abcd').on('value', (sn) => {
+        console.log(sn)
+        console.log(sn.val())
+      })
+    },
+    async readOnce () {
+      console.log('load0000000')
+      const sn = await this.$firebase.database().ref().child('abcd').once('value')
+      console.log(sn)
+      console.log(sn.val())
     }
   }
 }
