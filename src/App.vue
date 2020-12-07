@@ -8,6 +8,7 @@
       <v-app-bar-nav-icon @click="drawer=!drawer"/>
       <site-title :title="title"></site-title>
       <v-spacer/>
+      <v-btn icon @click="save"><v-icon>mdi-check</v-icon></v-btn>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer">
       test
@@ -34,6 +35,20 @@ export default {
       items: [],
       title: 'my Title',
       footer: 'my footer'
+    }
+  },
+  created () {
+  },
+  mounted () {
+    console.log(this.$firebase)
+  },
+  methods: {
+    save () {
+      console.log('save0000000')
+      this.$firebase.database().ref().child('abcd').set({
+        title: 'title',
+        text: 'text'
+      })
     }
   }
 }
