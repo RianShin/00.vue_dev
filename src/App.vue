@@ -8,6 +8,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"/>
       <site-title :title="site.title"></site-title>
       <v-spacer/>
+      <site-sign></site-sign>
 <!--      <v-btn icon @click="save"><v-icon>mdi-check</v-icon></v-btn>-->
 <!--      <v-btn icon @click="read"><v-icon>mdi-access-point</v-icon></v-btn>-->
 <!--      <v-btn icon @click="readOnce"><v-icon>mdi-access-point-network</v-icon></v-btn>-->
@@ -27,9 +28,10 @@
 import SiteTitle from '@/components/Title'
 import SiteFooter from '@/components/Footer'
 import SiteMenu from '@/components/Menu'
+import SiteSign from '@/components/Sign'
 
 export default {
-  components: { SiteTitle, SiteFooter, SiteMenu },
+  components: { SiteTitle, SiteFooter, SiteMenu, SiteSign },
   name: 'App',
   data () {
     return {
