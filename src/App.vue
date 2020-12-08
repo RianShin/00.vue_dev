@@ -12,7 +12,7 @@
 <!--      <v-btn icon @click="read"><v-icon>mdi-access-point</v-icon></v-btn>-->
 <!--      <v-btn icon @click="readOnce"><v-icon>mdi-access-point-network</v-icon></v-btn>-->
     </v-app-bar>
-    <v-navigation-drawer app v-model="drawer">
+    <v-navigation-drawer app v-model="drawer" width="400">
       test
       <site-menu :items="site.menu"></site-menu>
     </v-navigation-drawer>

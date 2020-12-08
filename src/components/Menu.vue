@@ -23,19 +23,53 @@
           <v-list-item-content>
             <v-list-item-title v-text="item.title"></v-list-item-title>
           </v-list-item-content>
+          <v-list-item-action>
+            <v-btn @click="openDialogItem(i)" icon>
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+          </v-list-item-action>
         </template>
 
         <v-list-item
-          v-for="subItems in item.subItems"
-          :key="subItems.title"
+          v-for="(subItems, j) in item.subItems"
+          :key="j"
           :to="subItems.to"
         >
           <v-list-item-content>
             <v-list-item-title v-text="subItems.title"></v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item>
+          <v-list-item-icon>
+            <v-icon>mdi-plus</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>add sub</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list-group>
+      <v-list-item @click="openDialogItem(-1)">
+        <v-list-item-icon>
+          <v-icon>mdi-plus</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>add sub</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
+    <v-dialog v-model="dialogItem" max-width="400">
+      <v-card>
+        <v-card-title>
+          modify
+          <v-spacer/>
+          <v-btn icon @click="saveItem"><v-icon>mdi-content-save</v-icon></v-btn>
+        </v-card-title>
+        <v-card-text>
+          <v-text-field v-model="formItem.title">
+          </v-text-field>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
 
   </div>
 </template>
@@ -45,6 +79,43 @@ export default {
   props: ['items'],
   data () {
     return {
+      dialogItem: false,
+      dialogSubItem: false,
+      formItem: {
+        icon: '',
+        title: ''
+      },
+      selectedItemIndex: -1
+    }
+  },
+  methods: {
+    openDialogItem (index) {
+      this.selectedItemIndex = index
+      this.dialogItem = true
+      if (index < 0) {
+        this.formItem.title = ''
+      } else {
+        this.formItem.title = this.items[index].title
+      }
+    },
+    saveItem () {
+      console.log('saveItem')
+      if (this.selectedItemIndex < 0) {
+        this.items.push(this.formItem)
+      } else {
+        this.items[this.selectedItemIndex] = this.formItem
+      }
+      this.save()
+    },
+    async save () {
+      // console.log('[this.footer]' + this.footer)
+      try {
+        await this.$firebase.database().ref().child('site').update({ menu: this.items })
+      } catch (e) {
+        console.log(e.message)
+      } finally {
+        this.dialogItem = false
+      }
     }
   }
 }
